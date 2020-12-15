@@ -100,6 +100,7 @@ extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_date(void);
+extern int sys_dup2(void);
 
 static int (*syscalls[])(void) = {
     [SYS_fork] sys_fork,
@@ -123,8 +124,9 @@ static int (*syscalls[])(void) = {
     [SYS_link] sys_link,
     [SYS_mkdir] sys_mkdir,
     [SYS_close] sys_close,
-    [SYS_date]  sys_date
-};
+    [SYS_date] sys_date,
+    [SYS_dup2] sys_dup2,
+    };
 
 /*static char *calls_name[] = {
     [SYS_fork] "fork",
@@ -149,6 +151,7 @@ static int (*syscalls[])(void) = {
     [SYS_mkdir] "mkdir",
     [SYS_close] "close",
     [SYS_date] "date",
+    [SYS_dup2] "dup2",
 };*/
 
 void syscall(void)
@@ -162,6 +165,7 @@ void syscall(void)
   {
     curproc->tf->eax = syscalls[num]();
     //cprintf("%s -> %d\n", calls_name[num], curproc->tf->eax);
+    //cprintf("arg0:0x%x        arg1:0x%x        arg2:0x%x        \n", *((int *)(curproc->tf->esp + 4)), *((int *)(curproc->tf->esp + 8)), *((int *)(curproc->tf->esp + 12)));
   }
   else
   {
