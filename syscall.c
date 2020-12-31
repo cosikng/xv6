@@ -154,6 +154,7 @@ static int (*syscalls[])(void) = {
     [SYS_close] "close",
     [SYS_date] "date",
     [SYS_dup2] "dup2",
+    [SYS_alarm] "sys_alarm",
 };*/
 
 void syscall(void)
