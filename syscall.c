@@ -130,7 +130,7 @@ static int (*syscalls[])(void) = {
     [SYS_alarm] sys_alarm,
     };
 
-/*static char *calls_name[] = {
+static char *calls_name[] = {
     [SYS_fork] "fork",
     [SYS_exit] "exit",
     [SYS_wait] "wait",
@@ -155,7 +155,7 @@ static int (*syscalls[])(void) = {
     [SYS_date] "date",
     [SYS_dup2] "dup2",
     [SYS_alarm] "sys_alarm",
-};*/
+};
 
 void syscall(void)
 {
@@ -167,8 +167,8 @@ void syscall(void)
   if (num > 0 && num < NELEM(syscalls) && syscalls[num])
   {
     curproc->tf->eax = syscalls[num]();
-    //cprintf("%s -> %d\n", calls_name[num], curproc->tf->eax);
-    //cprintf("arg0:0x%x        arg1:0x%x        arg2:0x%x        \n", *((int *)(curproc->tf->esp + 4)), *((int *)(curproc->tf->esp + 8)), *((int *)(curproc->tf->esp + 12)));
+    cprintf("%s -> %d\n", calls_name[num], curproc->tf->eax);
+    cprintf("arg0:0x%x        arg1:0x%x        arg2:0x%x        \n", *((int *)(curproc->tf->esp + 4)), *((int *)(curproc->tf->esp + 8)), *((int *)(curproc->tf->esp + 12)));
   }
   else
   {

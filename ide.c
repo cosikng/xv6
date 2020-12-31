@@ -147,6 +147,7 @@ iderw(struct buf *b)
     panic("iderw: ide disk 1 not present");
 
   acquire(&idelock);  //DOC:acquire-lock
+  //sti();
 
   // Append b to idequeue.
   b->qnext = 0;
@@ -162,6 +163,6 @@ iderw(struct buf *b)
   while((b->flags & (B_VALID|B_DIRTY)) != B_VALID){
     sleep(b, &idelock);
   }
-
+  //cli();
   release(&idelock);
 }

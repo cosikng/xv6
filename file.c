@@ -29,6 +29,7 @@ filealloc(void)
   struct file *f;
 
   acquire(&ftable.lock);
+  //sti();
   for(f = ftable.file; f < ftable.file + NFILE; f++){
     if(f->ref == 0){
       f->ref = 1;
@@ -36,6 +37,7 @@ filealloc(void)
       return f;
     }
   }
+  //cli();
   release(&ftable.lock);
   return 0;
 }
